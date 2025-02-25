@@ -157,6 +157,8 @@ def perform_encryption():
     plain_text = plain_text.lower().replace(" ","")
     if plain_text == "" and key1 == "" and key2 == "" and keyword == "":
         messagebox.showerror("Error","Please fill all input fields.")
+    if len(keyword) >= 15:
+        messagebox.showwarning("WARNING", "Keyword must be less than 15 characters.")
     else:
         try:
             key1 = int(key1)
@@ -198,15 +200,21 @@ def perform_decryption():
     cipher_text = cipher_text.lower().replace(" ","")
     if cipher_text == "" or key1 == "" or key2 == "" or keyword == "":
         messagebox.showerror("Error","Please fill all input fields.")
+        
+    if len(keyword) >= 15:
+        messagebox.showwarning("WARNING", "Keyword must be less than 15 characters.")
+
     else:
         try:
             key1 = int(key1)
             key2 = int(key2)
         except ValueError:
             messagebox.showerror("Error", "Key1 and Key2 should be in numbers.")
+
         else:
             if key2 % 2 == 0:
                 messagebox.showwarning("Warning", "Key2 should be coprime of 26.")
+
             else:
                 if int(key1) > 0 and int(key1) < 50 and int(key2) > 0 and int(key2) < 50:
                     decrypted_text = my_decryption(cipher_text)
@@ -230,35 +238,38 @@ def perform_decryption():
     Keyword_Entry.delete(0, tk.END)
     Text_Entry.focus()
 
-# Create Frame
+# Center a frame
+win.columnconfigure(0, weight=1)
+
+# Create Frame 
 Frame1 = ttk.LabelFrame(win)
 Frame1.grid(row=1, column=0, padx= 30, pady=30)
 
 #Create Labels
-Text_Label = ttk.Label(Frame1, text="Enter Text:", font=("TimesNewRoman",20))
+Text_Label = ttk.Label(Frame1, text="Enter Text:", font=("TimesNewRoman",12))
 Text_Label.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
-Key1_Label = ttk.Label(Frame1, text="Enter Key1 (number):", font=("TimesNewRoman",20))
+Key1_Label = ttk.Label(Frame1, text="Enter Key1 (number):", font=("TimesNewRoman",12))
 Key1_Label.grid(row=1, column=0, padx=10, pady=10, sticky=tk.W)
-Key2_Label = ttk.Label(Frame1, text="Enter Key2 (number):", font=("TimesNewRoman",20))
+Key2_Label = ttk.Label(Frame1, text="Enter Key2 (number):", font=("TimesNewRoman",12))
 Key2_Label.grid(row=2, column=0, padx=10, pady=10, sticky=tk.W)
-Keyword_Label = ttk.Label(Frame1, text="Enter Keyword:", font=("TimesNewRoman",20))
+Keyword_Label = ttk.Label(Frame1, text="Enter Keyword:", font=("TimesNewRoman",12))
 Keyword_Label.grid(row=3, column=0, padx=10, pady=10, sticky=tk.W)
-ResultLabel = ttk.Label(Frame1, text="", font=("TimesNewRoman", 20))
+ResultLabel = ttk.Label(Frame1, text="", font=("TimesNewRoman", 12), wraplength=600, justify="left")
 ResultLabel.grid(row=5, columnspan=2, padx=10, pady=10, sticky=tk.W)
 
 #Create Entries
 text = tk.StringVar()
-Text_Entry = ttk.Entry(Frame1, width=50, textvariable=text,font=("TimesNewRoman",20))
+Text_Entry = ttk.Entry(Frame1, width=50, textvariable=text,font=("TimesNewRoman",12))
 Text_Entry.grid(row=0, column=1, padx=10, pady=10)
 Text_Entry.focus()
 Key1 = tk.StringVar()
-Key1_Entry = ttk.Entry(Frame1, width=50, textvariable=Key1,font=("TimesNewRoman",20))
+Key1_Entry = ttk.Entry(Frame1, width=50, textvariable=Key1,font=("TimesNewRoman",12))
 Key1_Entry.grid(row=1, column=1, padx=10, pady=10)
 Key2 = tk.StringVar()
-Key2_Entry = ttk.Entry(Frame1, width=50, textvariable=Key2,font=("TimesNewRoman",20))
+Key2_Entry = ttk.Entry(Frame1, width=50, textvariable=Key2,font=("TimesNewRoman",12))
 Key2_Entry.grid(row=2, column=1, padx=10, pady=10)
 Keyword = tk.StringVar()
-Keyword_Entry = ttk.Entry(Frame1, width=50, textvariable=Keyword, font=("TimesNewRoman",20))
+Keyword_Entry = ttk.Entry(Frame1, width=50, textvariable=Keyword, font=("TimesNewRoman",12))
 Keyword_Entry.grid(row=3, column=1, padx=10, pady=10)
 
 #Create Submit Buttons
